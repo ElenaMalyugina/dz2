@@ -32,7 +32,7 @@ function performArithmetic($operator) {
     } elseif ($operator == "/") {
         $res = $args[1];
         for ($i = 2; $i < sizeof($args); $i++) {
-            if ($args[i] !== 0) {
+            if ($args[$i] !== 0) {
                 $res = $res / $args[$i];
             }
         }
