@@ -1,56 +1,57 @@
 <?php
 
-function printStrings($stringsArr, $isReturn) {
-    foreach($stringsArr as $itemString){
-        echo "<p>" . $itemString . "</p>";
+function printStrings($strings, $isConcat) {
+    foreach($strings as $string){
+        echo "<p>" . $string . "</p>";
     }
 
-    if ($isReturn) {
-        return implode(", ", $stringsArr);
+    if ($isConcat) {
+        return implode(", ", $strings);
     }
 }
 
-function performArithmetic($operator) {
-    $args = func_get_args();
-    $res;
+function performArithmetic($operator, ...$numbers) {
+    //$args = func_get_args();
+    $count = sizeof($numbers);
 
     if ($operator == '+') {
         $res = 0;
-        for ($i = 1; $i < sizeof($args); $i++) {
-            $res += $args[$i];
+        for ($i = 0; $i < $count; $i++) {
+            $res += $numbers[$i];
         }
     } elseif ($operator == '*') {
         $res = 1;
-        for ($i = 1; $i < sizeof($args); $i++) {
-            $res *= $args[$i];
+        for ($i = 0; $i < $count; $i++) {
+            $res *= $numbers[$i];
         }
     } elseif ($operator == "-") {
-        $res = $args[1];
-        for ($i = 2; $i < sizeof($args); $i++) {
-            $res = $res - $args[$i];
+        $res = $numbers[0];
+        for ($i = 1; $i < $count; $i++) {
+            $res = $res - $numbers[$i];
         }
     } elseif ($operator == "/") {
-        $res = $args[1];
-        for ($i = 2; $i < sizeof($args); $i++) {
+        $res = $numbers[0];
+        for ($i = 1; $i < $count; $i++) {
             if ($args[$i] !== 0) {
-                $res = $res / $args[$i];
+                $res = $res / $numbers[$i];
             }
         }
     }
 
-    return $res;
+    $resString = implode($operator, $numbers) . "=" . $res;
+    return $resString;
 }
 
-function multipleTable($dig1, $dig2){
-    if(!is_int($dig1) || !is_int($dig2)){
+function multipleTable($rows, $cols){
+    if(!is_int($rows) || !is_int($cols)){
         echo "Аргументы должны быть целыми числами <br>";
         return;
     }
 
     echo "<table>";
-    for($i = 1; $i <= $dig1 ; $i++){
+    for($i = 1; $i <= $rows ; $i++){
         echo "<tr>";
-            for($j =1 ; $j <= $dig2; $j++){
+            for($j =1 ; $j <= $cols; $j++){
                 echo "<td>" .$i*$j  ."</td>";               
             }
         echo "</tr>";    
